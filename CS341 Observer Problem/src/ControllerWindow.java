@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,12 +12,12 @@ public class ControllerWindow {
 	private ObservableSubject observableSubject;
 
 	ControllerWindow(ObserverWindow observerWindow) {
-		//Initialize the action that will be observed.
+		// Initialize the action that will be observed.
 		nTaps = 0;
 
 		// Create the ObservableSubject and add an Observer (observerWindow)
-		observableSubject = new ObservableSubject();
-		observableSubject.addObserver(observerWindow);
+		observableSubject = new ObservableSubject(observerWindow);
+		observableSubject.addPropertyChangeListener(observerWindow);
 
 		// Build the window frame for the observed subject.
 		buildWindowFrame();
@@ -37,8 +38,9 @@ public class ControllerWindow {
 	private void registerTapObservedAction() {
 		tapButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String data = "   Subject was tapped: " + ++nTaps;
-				observableSubject.changeData(data);
+				String dataOld = "   Subject was tapped: " + nTaps;
+				String dataNew = "   Subject was tapped: " + ++nTaps;
+				observableSubject.setValue(dataOld, dataNew);
 			}
 		});
 	}

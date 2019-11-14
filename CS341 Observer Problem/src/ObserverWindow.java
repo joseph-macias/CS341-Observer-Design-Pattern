@@ -1,10 +1,10 @@
-import java.util.Observable;
-import java.util.Observer;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class ObserverWindow implements Observer {
+public class ObserverWindow implements PropertyChangeListener {
 
 	private JLabel label;
 
@@ -19,10 +19,10 @@ public class ObserverWindow implements Observer {
 		frame.setVisible(true);
 	}
 
-	// The Observer interface requires the implementation of update() abstract method
-	public void update(Observable o, Object data) {
-		//Display the number of taps that occur on the observed window.
-		label.setText((String) data);
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		label.setText((String) evt.getNewValue());
+
 	}
 
 }
