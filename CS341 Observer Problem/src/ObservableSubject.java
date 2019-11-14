@@ -13,8 +13,6 @@ public class ObservableSubject extends PropertyChangeSupport {
 	}
 
 	public void setValue(String dataOld, String dataNew) {
-		// The parameter values of firePropertyChange method
-		// constitute the PropertyChangeEvent object
 		pcs.firePropertyChange("message", dataOld, dataNew);
 	}
 
